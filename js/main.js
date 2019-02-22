@@ -45,7 +45,7 @@ function init() {
     light.shadow.camera.near = 0.1;
     light.shadow.camera.far = 25;
     scene.add(light);
-    /**
+    
     for (let i = -5; i < 5; i++) {
         for (let j = -5; j < 5; j++) {
             let block = new Block(i, -0.5, j, "dirt");
@@ -53,11 +53,6 @@ function init() {
             blocks.push(block.mesh);
         }
     }
-    **/
-
-    let block = new Block(0, -0.5, 0, "dirt");
-    scene.add(block.mesh);
-    blocks.push(block.mesh);
 
     renderer = new T.WebGLRenderer({antialias:true});
     renderer.setSize(width, height);
