@@ -10,9 +10,10 @@ let velocity;
 
 let keys = {};
 let player = {
-	height: 1.8,
-	speed: 0.2,
-	turnSpeed: Math.PI * 0.02
+	height: 2,
+	speed: 0.02,
+    gravity: 0.03
+
 };
 
 function init() {
@@ -20,6 +21,8 @@ function init() {
     height = window.innerHeight;
     width = window.innerWidth;
     scene = new T.Scene();
+    scene.background = new THREE.Color( 0xffffff );
+    scene.fog = new THREE.Fog( 0xffffff, 0, 750 );
     camera = new T.PerspectiveCamera(60, width / height, 0.1, 1000);
 
     cameraPitch = new T.Object3D();
@@ -34,7 +37,7 @@ function init() {
     cursor = new THREE.Vector2();
     raycaster = new THREE.Raycaster();
 
-    velocity = new T.Vector3();  
+    velocity = new T.Vector3();
 
     ambientLight = new T.AmbientLight(0xffffff, 0.5);
     scene.add(ambientLight);
@@ -73,16 +76,16 @@ function animate() {
     width = window.innerWidth;
 
     if (keys[87]) {
-        velocity.z += 0.02;
+        velocity.z += player.speed;
     }
     if (keys[83]) {
-        velocity.z -= 0.02;
+        velocity.z -= player.speed;
     }
     if (keys[65]) {
-        velocity.x += 0.02;
+        velocity.x += player.speed;
     }
     if (keys[68]) {
-        velocity.x -= 0.02;
+        velocity.x -= player.speed;
     }
     if (keys[32]) {
         velocity.y += 0.02;
@@ -90,6 +93,8 @@ function animate() {
     if (keys[16]) {
         velocity.y -= 0.02;
     }
+
+    //velocity.y -= player.gravity;
     
     cameraYaw.translateX(velocity.x);
     cameraYaw.translateY(velocity.y);
@@ -159,6 +164,20 @@ function findBlock() {
             }
         }
     }
+}
+function collide() {
+    let vertices = [
+        new T.Vector3(-0.5, 2, -5.5),
+        new T.Vector3(-0.5, 2, -4.5), 
+        new T.Vector3(0.5, 2, -4.5), 
+        new T.Vector3(0.5, 2, -5.5),
+
+        new T.Vector3(-0.5, 0, -5.5),
+        new T.Vector3(-0.5, 0, -4.5), 
+        new T.Vector3(0.5, 0, -4.5), 
+        new T.Vector3(0.5, 0, -5.5)
+    ];
+    
 }
 
 function lockChange(e) {
